@@ -44,7 +44,7 @@ input_data = pd.DataFrame([{
     "NumberOfFollowups":NumberOfFollowups,
     "ProductPitched":ProductPitched,
     "PreferredPropertyStar":PreferredPropertyStar,
-    "MaritalStatus": "Married" if MaritalStatus == "Married" else "Single",
+    "MaritalStatus": MaritalStatus,
     "NumberOfTrips":NumberOfTrips,
     "Passport":1 if Passport == "Yes" else 0,
     "PitchSatisfactionScore":PitchSatisfactionScore,
