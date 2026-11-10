@@ -12,7 +12,7 @@ import joblib
 import mlflow
 
 mlflow.set_tracking_uri("http://localhost:5000")
-mlflow.set_experiment("mlops-training-experiment")
+mlflow.set_experiment("tourism_project-training-experiment")
 
 # Xtrain/Xtest/ytrain/ytest are downloaded from the previous job's artifact
 Xtrain = pd.read_csv("Xtrain.csv")
@@ -109,7 +109,7 @@ with mlflow.start_run():
 
     # Save next to app.py so the Streamlit app can load it directly, and log
     # it as an MLflow artifact for traceability
-    model_path = "tourism_project/deployment/best_churn_model_v1.joblib"
+    model_path = "tourism_project/deployment/tourism_project_model_v1.joblib"
     joblib.dump(best_model, model_path)
     mlflow.log_artifact(model_path, artifact_path="model")
     print(f"Model saved to {model_path}")
