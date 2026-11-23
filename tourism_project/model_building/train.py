@@ -20,13 +20,11 @@ Xtest  = pd.read_csv("Xtest.csv")
 ytrain = pd.read_csv("ytrain.csv").squeeze()
 ytest  = pd.read_csv("ytest.csv").squeeze()
 
-# List of numerical features in the dataset
+# List of numerical features in the dataset (excluding CustomerID and ProdTaken)
 numeric_features = [
-    "CustomerID", "ProdTaken", "Age", "CityTier", "DurationOfPitch", "NumberOfPersonVisiting", "NumberOfFollowups", "PreferredPropertyStar", "NumberOfTrips",
+    "Age", "CityTier", "DurationOfPitch", "NumberOfPersonVisiting", "NumberOfFollowups", "PreferredPropertyStar", "NumberOfTrips",
     "Passport", "PitchSatisfactionScore", "OwnCar", "NumberOfChildrenVisiting", "MonthlyIncome",
 ]
-
-
 
 # List of categorical features in the dataset
 categorical_features = [
@@ -35,7 +33,6 @@ categorical_features = [
 
 # Set the class weight to handle class imbalance
 class_weight = ytrain.value_counts()[0] / ytrain.value_counts()[1]
-class_weight
 
 # Define the preprocessing steps
 preprocessor = make_column_transformer(
@@ -46,8 +43,7 @@ preprocessor = make_column_transformer(
 # Define base XGBoost model
 xgb_model = xgb.XGBClassifier(scale_pos_weight=class_weight, random_state=42)
 
-# Small grid so the pipeline runs fast on GitHub Actions.
-# Widen this if you want a more thorough hyperparameter search.
+# Small grid so the pipeline runs fast on GitHub Actions
 param_grid = {
     "xgbclassifier__n_estimators": [50, 100],
     "xgbclassifier__max_depth": [2, 3],
@@ -107,8 +103,7 @@ with mlflow.start_run():
         "test_f1-score": test_report["1"]["f1-score"]
     })
 
-    # Save next to app.py so the Streamlit app can load it directly, and log
-    # it as an MLflow artifact for traceability
+    # Save next to app.py
     model_path = "tourism_project/deployment/tourism_project_model_v1.joblib"
     joblib.dump(best_model, model_path)
     mlflow.log_artifact(model_path, artifact_path="model")
