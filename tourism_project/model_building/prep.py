@@ -9,15 +9,13 @@ print("Dataset loaded successfully.")
 # Define the target variable for the classification task
 target = "ProdTaken"
 
-# List of numerical features in the dataset
+# List of numerical features in the dataset (excluding CustomerID and ProdTaken)
 numeric_features = [
-    "CustomerID",               #Unique identifier for each customer.
-    "ProdTaken",                #Target variable indicating whether the customer has purchased a package (0: No, 1: Yes).
     "Age",                      #Age of the customer.
     "CityTier",                 #The city category based on development, population, and living standards (Tier 1 > Tier 2 > Tier 3)
     "DurationOfPitch",          #Duration of the sales pitch delivered to the customer.
     "NumberOfPersonVisiting",   #Total number of people accompanying the customer on the trip.
-    "NumberOfFollowups",        #Total number of follow-ups by the salesperson after the sales pitch.-
+    "NumberOfFollowups",        #Total number of follow-ups by the salesperson after the sales pitch.
     "PreferredPropertyStar",    #Preferred hotel rating by the customer.
     "NumberOfTrips",            #Average number of trips the customer takes annually.
     "Passport",                 #Whether the customer holds a valid passport (0: No, 1: Yes).
@@ -35,7 +33,6 @@ categorical_features = [
     "ProductPitched",    #The type of product pitched to the customer.
     "MaritalStatus",     #Marital status of the customer
     "Designation",       #Customer's designation in their current organization.
-
 ]
 
 # Define predictor matrix (X) using selected numeric and categorical features
@@ -47,9 +44,9 @@ y = df[target]
 # Split the dataset into training and test sets
 Xtrain, Xtest, ytrain, ytest = train_test_split(
     X, y,              # Predictors (X) and target variable (y)
-    test_size=0.2,     # 20% of the data is reserved for testing
-    random_state=42,   # Ensures reproducibility by setting a fixed random seed
-    stratify=y,        # keeps the (imbalanced) churn ratio consistent across splits
+    test_size=0.2,
+    random_state=42,
+    stratify=y,
 )
 
 Xtrain.to_csv("Xtrain.csv", index=False)
